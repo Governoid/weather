@@ -1,0 +1,29 @@
+.top {
+    padding-bottom: 20px;
+    padding-top: 20px;
+    background-color: #3e3b51;
+    color: #f8f8f8
+}
+.top h1 {
+    margin-left: 20px;
+    color: #fff;
+    
+}
+.search {
+    text-align: center;
+    padding: 1rem;
+}
+  
+input {
+    padding: .7rem 1.5rem;
+    font-size: 1.2rem;
+    border-radius: 25px;
+    border: 1px solid rgba(255,255,255, 0.8);
+    background: rgba(255,255,255, 0.1);
+    color: #f8f8f8;
+ }
+.top p {
+    color: #fff;
+    background-color: #3e3b51;
+    font-size: 3rem
+}
