@@ -1,29 +1,49 @@
 .top {
-    padding-bottom: 20px;
-    padding-top: 20px;
-    background-color: #3e3b51;
-    color: #f8f8f8
-}
-.top h1 {
-    margin-left: 20px;
-    color: #fff;
-    
+    padding: 25px 0;
+    text-align: center;
 }
 .search {
     text-align: center;
-    padding: 1rem;
+    padding-top: 25px;
+    padding-bottom: 25px;
 }
-  
 input {
+    text-align: center;
+    width: 50%;
     padding: .7rem 1.5rem;
     font-size: 1.2rem;
     border-radius: 25px;
-    border: 1px solid rgba(255,255,255, 0.8);
-    background: rgba(255,255,255, 0.1);
-    color: #f8f8f8;
+    border: 1px solid #848B98;
+    background: rgba(255, 255, 255, 0.1);
+    background-color: #ffffff;
  }
-.top p {
+.header {
+    background: #fd9a80;
+    border-radius: 15px;
+    margin: 15px;
+    padding: 5px;
     color: #fff;
-    background-color: #3e3b51;
-    font-size: 3rem
+    font-weight: 600;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.flex {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    overflow-x: auto;
+    margin-bottom: 25px;
+    margin-left: 20%;
+}
+.bold {
+    font-size: 23px;
+}
+@media screen and (min-width: 1440px) {
+    .header {
+        margin-left: 15%;
+        width: 70%;
+    }
+}
+.fa-solid {
+    margin-left: 15px;
 }
