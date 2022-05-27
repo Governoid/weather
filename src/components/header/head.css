@@ -33,7 +33,6 @@ input {
     gap: 20px;
     overflow-x: auto;
     margin-bottom: 25px;
-    margin-left: 20%;
 }
 .bold {
     font-size: 23px;
@@ -44,15 +43,33 @@ input {
         width: 70%;
     }
     .forecast {
-        margin-left: 29%;
+        margin-left: 20%;
+    }
+    .flex {
+        margin-left: 20%;
     }
 }
-.fa-solid {
-    margin-left: 50px!important;
+.svg-inline--fa {
+    margin-left: 8px!important;
 }
 .forecast {
     display: flex;
     align-items: center;
     overflow-x: auto;
     gap: 20px;
+}
+.forecast h1 {
+    width: 50px;
+    height: 50px;
+}
+.select {
+    margin-left: 25%;
+    text-align: center;
+    width: 125px;
+    padding: 5px 5px;
+    font-size: 1.2rem;
+    border-radius: 25px;
+    border: 1px solid #848B98;
+    background: rgba(255, 255, 255, 0.1);
+    background-color: #ffffff;
 }

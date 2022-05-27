@@ -1,25 +1,65 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import './head.css'
 import {faTemperatureHalf} from "@fortawesome/free-solid-svg-icons"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import Moment from 'react-moment';
+
+
 function Header(){
   const [data, setData] = useState(null);
   const [location, setLocation] = useState('')
-  const url = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=f39fe8fadd1b0c5f8d671ecacb583261&units=metric`
+  const [cnt, setCnt] = useState('3')
+  const [lon, setLon] = useState('');
+  const [lat, setLat] = useState('');
+  const url1= `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&appid=e32f270d40e5509cf97512164550a894&units=metric&cnt=${cnt}`
+  const url = `https://api.openweathermap.org/data/2.5/forecast/daily?q=${location}&appid=e32f270d40e5509cf97512164550a894&units=metric&cnt=${cnt}`
+ 
+  function success(pos) {
+    setLat(pos.coords.latitude);
+    setLon(pos.coords.longitude);
+
+  }
+
+ useEffect(() => {
+  navigator.geolocation.getCurrentPosition(success);
+ }, [])
+
+ useEffect(() => {
+   fetchData(url1);
+ }, [lat, lon])
+
   const searchLocation = (event) => {
     if (event.key === 'Enter') {
-      axios.get(url).then((response) => {
+      fetchData(url);
+    }
+  }
+
+  const fetchData = (custurl) => {
+    if (location.length || lat) {
+      axios.get(custurl).then((response) => {
         setData(response.data)
         console.log(response.data)
       })
-      setLocation('')
     }
   }
+
+  useEffect(() => {
+    if (location) {
+      fetchData(url);
+    } else if (lat) {
+      fetchData(url1);
+    }
+  }, [cnt])
+
+  const handleDaysChange = (e) => {
+    setCnt(e.target.value);
+  }
+
   return (
     
     <>
-    
+      
       <div className='header'>
         <div className='top'>
           <h1>Weather App React</h1>
@@ -29,15 +69,23 @@ function Header(){
           value={location}
           onChange={event => setLocation(event.target.value)}
           onKeyPress={searchLocation}
+          placeholder='Type city here'
           type="text"/>
         </div>
+        <select className='select' onChange={handleDaysChange}
+                 value={cnt}>
+          <option value="3">3 Days</option>
+          <option value="6">6 Days</option>
+          <option value="9">9 Days</option>
+        </select>
         <div className='tops'>
           {data &&
           (<div>
             {data && data.list.map((item,index) => {
               if (index < 1) {
+
                 return <div className='flex' key={index}>
-                        <h1>{data.city.name}</h1>
+                        <h1>{data.city.name} today </h1>
                         <div className='image'>
                           <img key={index}
                            src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
@@ -46,19 +94,19 @@ function Header(){
                       </div>
                       <div className='bold temp'>
                         <h4>Temperature<FontAwesomeIcon className='fa-solid' icon={faTemperatureHalf}/></h4>
-                        {item.main ? <p>{item.main.temp.toFixed()}°C</p> : null}
+                        {item.temp ? <p>{item.temp.day.toFixed()}°C</p> : null}
                       </div>
                       <div className='bold temp'>
                         <h4>Wind speed<FontAwesomeIcon className='fa-solid' icon="fa-solid fa-wind"/></h4>
-                        {item.wind ? <p key={index} className='bold'>{item.wind.speed.toFixed()} KPH</p> : null}
+                        {item.speed ? <p key={index} className='bold'>{item.speed.toFixed()} KPH</p> : null}
                       </div>
                       <div className='bold temp'>
                         <h4>Humidity<FontAwesomeIcon className='fa-solid' icon="fa-solid fa-droplet"/></h4>
-                        {item.main ? <p key={index} className='bold'>{item.main.humidity}%</p> : null}
+                        {item.humidity ? <p key={index} className='bold'>{item.humidity}%</p> : null}
                       </div>
                       <div className='bold temp'>
                         <h4>Feels like<FontAwesomeIcon className='fa-solid' icon={faTemperatureHalf}/></h4>
-                        {item.main ? <p key={index} className='bold'>{item.main.feels_like.toFixed()}°C</p> : null}
+                        {item.feels_like ? <p key={index} className='bold'>{item.feels_like.day.toFixed()}°C</p> : null}
                       </div>
                       </div>
               }
@@ -66,27 +114,30 @@ function Header(){
           </div>)
           }
         </div>
+        
         {data &&  data.list.map((item,index) => {
+          
           return <div key={index} className='forecast'>
+                    <h1 className='brah'><Moment format='ddd'>{item.dt * 1000}</Moment></h1>
                     <div className='image'>
                       <img key={index}
                             src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}/>
                     </div>
                     <div className='bold temp'>
                       <h4>Temperature<FontAwesomeIcon className='fa-solid' icon={faTemperatureHalf}/></h4>
-                      {item.main ? <p>{item.main.temp}°C</p> : null}
+                      {item.temp ? <p>{item.temp.day.toFixed()}°C</p> : null}
                     </div>
                     <div className='bold temp'>
-                      <h4>Wind speed<FontAwesomeIcon className='fa-solid' icon="fa-solid fa-wind"/></h4>
-                      {item.wind ? <p key={index} className='bold'>{item.wind.speed.toFixed()} KPH</p> : null}
+                      <h4 >Wind speed<FontAwesomeIcon className='fa-solid' icon="fa-solid fa-wind"/></h4>
+                      {item.speed ? <p key={index} className='bold'>{item.speed.toFixed()} KPH</p> : null}
                   </div>
                   <div className='bold temp'>
                     <h4>Humidity<FontAwesomeIcon className='fa-solid' icon="fa-solid fa-droplet"/></h4>
-                    {item.main ? <p key={index} className='bold'>{item.main.humidity}%</p> : null}
+                    {item.humidity ? <p key={index} className='bold'>{item.humidity}%</p> : null}
                   </div>
                   <div className='bold temp'>
                     <h4>Feels like<FontAwesomeIcon className='fa-solid' icon={faTemperatureHalf}/></h4>
-                    {item.main ? <p key={index} className='bold'>{item.main.feels_like.toFixed()}°C</p> : null}
+                    {item.feels_like ? <p key={index} className='bold'>{item.feels_like.day.toFixed()}°C</p> : null}
                   </div>
                   </div>
         })
