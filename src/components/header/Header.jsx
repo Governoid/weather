@@ -133,7 +133,7 @@ function Header(){
             })}
           </div>)
           }
-
+          {data && 
           <div className='weekly'>
             <div className='weekly_title'>
               Weekly<span> weather</span>
@@ -144,6 +144,7 @@ function Header(){
                 </select>
             </div>
           </div>
+}
         {data &&  data.list.map((item,index) => {
           
           if(index != 0) return (
@@ -193,7 +194,7 @@ function Header(){
             </div>
           )                 
         })
-        }
+      }
       </div>
     </> 
   )
