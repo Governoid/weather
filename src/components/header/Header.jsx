@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import './head.css'
+import './head.scss'
 import {faTemperatureHalf} from "@fortawesome/free-solid-svg-icons"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import Moment from 'react-moment';
@@ -9,7 +9,7 @@ import Moment from 'react-moment';
 function Header(){
   const [data, setData] = useState(null);
   const [location, setLocation] = useState('')
-  const [cnt, setCnt] = useState('3')
+  const [cnt, setCnt] = useState('4')
   const [lon, setLon] = useState('');
   const [lat, setLat] = useState('');
   const url1= `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&appid=e32f270d40e5509cf97512164550a894&units=metric&cnt=${cnt}`
@@ -72,124 +72,130 @@ function Header(){
           placeholder='Type city here'
           type="text"/>
         </div>
-        <select className='select' onChange={handleDaysChange}
-                 value={cnt}>
-          <option value="3">3 Days</option>
-          <option value="6">6 Days</option>
-          <option value="9">9 Days</option>
-        </select>
-        <div className='tops'>
           {data &&
           (<div>
             {data && data.list.map((item,index) => {
               if (index < 1) {
 
-                return <div className='flex' key={index}>
-                        <h1>{data.city.name} today </h1>
-                        <div className='image'>
-                          <img key={index}
-                           src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
-                           alt="weather"
-                           className='weather-icon'/>
-                      </div>
-                      <div className='bold temp'>
-                        <h4>Temperature<FontAwesomeIcon className='fa-solid' icon={faTemperatureHalf}/></h4>
-                        {item.temp ? <p>{item.temp.day.toFixed()}°C</p> : null}
-                      </div>
-                      <div className='bold temp'>
-                        <h4>Wind speed<FontAwesomeIcon className='fa-solid' icon="fa-solid fa-wind"/></h4>
-                        {item.speed ? <p key={index} className='bold'>{item.speed.toFixed()} KPH</p> : null}
-                      </div>
-                      <div className='bold temp'>
-                        <h4>Humidity<FontAwesomeIcon className='fa-solid' icon="fa-solid fa-droplet"/></h4>
-                        {item.humidity ? <p key={index} className='bold'>{item.humidity}%</p> : null}
-                      </div>
-                      <div className='bold temp'>
-                        <h4>Feels like<FontAwesomeIcon className='fa-solid' icon={faTemperatureHalf}/></h4>
-                        {item.feels_like ? <p key={index} className='bold'>{item.feels_like.day.toFixed()}°C</p> : null}
-                      </div>
+                return <div className='today' key={index}>
+                        <div className='today_inner'>
+                          <div className='today_left'>
+                            <h1>
+                              {data.city.name} ({data.city.country})
+                            </h1>
+                            <h2>
+                              <span>{item.temp.max.toFixed()}°C</span>
+                              <span>{item.temp.min.toFixed()}°C</span>
+                            </h2>
+                            <div className='today_data'>
+                              <div>
+                                <span>W.Speed<FontAwesomeIcon className='fa-solid' icon="fa-solid fa-wind"/></span>
+                                <span>
+                                  {item.speed.toFixed()} KPH
+                                </span>
+                              </div>
+
+                              <div>
+                                <span>Humidity<FontAwesomeIcon className='fa-solid' icon="fa-solid fa-droplet"/></span>
+                                <span>
+                                  {item.humidity.toFixed()} %
+                                </span>
+                              </div>
+
+                              <div>
+                                <span>Sunrise<FontAwesomeIcon icon="fa-solid fa-sun" /></span>
+                                <span>
+                                <Moment format='LT'>{item.sunrise * 1000}</Moment>
+                                </span>
+                              </div>
+                              <div>
+                                <span>Sunset<FontAwesomeIcon icon="fa-solid fa-moon" /></span>
+                                <span>
+                                <Moment format='LT'>{item.sunset * 1000}</Moment>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className='today_right'>
+                            <div className='today_icon'>
+                              <div>
+                                <img src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
+                                     alt="Weather icon"
+                                     />
+                              </div>
+                            </div>
+                            <h3>{item.weather[0].description}</h3>
+                          </div>
+                        </div>
                       </div>
               }
             })}
           </div>)
           }
-        </div>
-        
+
+          <div className='weekly'>
+            <div className='weekly_title'>
+              Weekly<span> weather</span>
+                <select className='select' onChange={handleDaysChange} value={cnt}>
+                  <option value="4">3 Days</option>
+                  <option value="7">6 Days</option>
+                  <option value="10">9 Days</option>
+                </select>
+            </div>
+          </div>
         {data &&  data.list.map((item,index) => {
           
-          return <div key={index} className='forecast'>
-                    <h1 className='brah'><Moment format='ddd'>{item.dt * 1000}</Moment></h1>
-                    <div className='image'>
-                      <img key={index}
-                            src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}/>
+          if(index != 0) return (
+            <div className='weekly_card' key={item.dt}>
+              <div className='weekly_inner'>
+                <div className='weekly_left'>
+                  <div>
+                    <h3>
+                    <Moment format='dddd'>{item.dt * 1000}</Moment>
+                    </h3>
+
+                    <h4>
+                      <span>{item.temp.max.toFixed(0)}°C</span>
+                      <span>{item.temp.min.toFixed(0)}°C</span>
+                    </h4>
+                  </div>
+
+                  <div className='weekly_data'>
+                    <div>
+                      <span>Sunrise</span>
+                      <span>
+                      <Moment format='LT'>{item.sunrise * 1000}</Moment>
+                      </span>
                     </div>
-                    <div className='bold temp'>
-                      <h4>Temperature<FontAwesomeIcon className='fa-solid' icon={faTemperatureHalf}/></h4>
-                      {item.temp ? <p>{item.temp.day.toFixed()}°C</p> : null}
+
+                    <div>
+                      <span>Sunset</span>
+                      <span>
+                      <Moment format='LT'>{item.sunset * 1000}</Moment>
+                      </span>
                     </div>
-                    <div className='bold temp'>
-                      <h4 >Wind speed<FontAwesomeIcon className='fa-solid' icon="fa-solid fa-wind"/></h4>
-                      {item.speed ? <p key={index} className='bold'>{item.speed.toFixed()} KPH</p> : null}
                   </div>
-                  <div className='bold temp'>
-                    <h4>Humidity<FontAwesomeIcon className='fa-solid' icon="fa-solid fa-droplet"/></h4>
-                    {item.humidity ? <p key={index} className='bold'>{item.humidity}%</p> : null}
+                </div>
+
+                <div className='weekly_right'>
+                  <div className='weekly_icon'>
+                    <div>
+                      <img src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
+                           alt="Weather icon"
+                      />
+                    </div>
                   </div>
-                  <div className='bold temp'>
-                    <h4>Feels like<FontAwesomeIcon className='fa-solid' icon={faTemperatureHalf}/></h4>
-                    {item.feels_like ? <p key={index} className='bold'>{item.feels_like.day.toFixed()}°C</p> : null}
-                  </div>
-                  </div>
+
+                  <h5>{item.weather[0].description}</h5>
+                </div>
+              </div>
+            </div>
+          )                 
         })
         }
       </div>
     </> 
-      // {data.length &&
-      
-      // }
-    // {data.list.map((item)=> (
-    //   <h2></h2>
-    // ))}
-    // <div className='header'>
-    //     <div className='top'>
-    //         <h1>Weather App react</h1>
-    //     </div>
-
-    //     <div className="tops">
-    //     {data && 
-    //     (<div className='flex'>
-    //         <h1>{data.name}</h1>
-    //         <div className='image'>
-    //           <img 
-    //             src={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
-    //             alt="weather"
-    //             className='weather-icon'/>
-    //           </div>
-    //           <div className='bold temp'>
-    //           <h4>Temperature<FontAwesomeIcon className='fa-solid' icon={faTemperatureHalf}/></h4>
-    //           {data.main ? <p>{data.main.temp.toFixed()}°C</p> : null}
-    //           </div>
-    //           <div className='bold'>
-    //             <h4>Wind speed<FontAwesomeIcon className='fa-solid' icon="fa-solid fa-wind"/></h4>
-    //             {data.wind ? <p className='bold'>{data.wind.speed.toFixed()} KPH</p> : null}
-    //           </div>
-    //           <div className='bold'>
-    //             <h4>Humidity<FontAwesomeIcon className='fa-solid' icon="fa-solid fa-droplet"/></h4>
-    //           {data.main ? <p className='bold'>{data.main.humidity}%</p> : null}
-    //           </div>
-    //           <div className='bold'>
-    //             <h4>Feels like<FontAwesomeIcon className='fa-solid' icon={faTemperatureHalf}/></h4>
-    //             {data.main ? <p className='bold'>{data.main.feels_like.toFixed()}°C</p> : null}
-    //           </div>
-    //       </div>)
-    //     }{data && 
-    //       (<div className='forecast'>
-    //         <h1>Forecast</h1>
-    //       </div>)
-    //     }
-        
-    //     </div>
-    // </div>
   )
 }
 

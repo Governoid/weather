@@ -1,0 +1,246 @@
+$primary: #05172F;
+$f-bold: 700;
+$f-light: 300;  
+body {
+    background-color: $primary;
+}
+.top {
+    padding: 25px 0;
+    text-align: center;
+}
+.search {
+    text-align: center;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+input {
+    text-align: center;
+    width: 50%;
+    padding: .7rem 1.5rem;
+    font-size: 1.2rem;
+    border-radius: 25px;
+    border: 1px solid #848B98;
+    background: rgba(255, 255, 255, 0.1);
+    background-color: #ffffff;
+ }
+.header {
+    background: #031025;
+    border-radius: 15px;
+    margin: 15px;
+    padding: 5px;
+    color: #fff;
+    font-weight: 600;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.flex {
+    display: flex;
+    justify-content: space-between;
+    margin: 3rem 0;
+}
+.bold {
+    font-size: 23px;
+}
+@media screen and (min-width: 1440px) {
+    .header {
+        margin-left: 25%;
+        width: 1000px;
+    }
+}
+@media screen and (max-width: 454px) {
+    body .today .today_data  {
+        display: flex;
+        flex-direction: row;
+    }
+}
+.forecast {
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    gap: 20px;
+}
+.forecast h1 {
+    width: 50px;
+    height: 50px;
+}
+.select {
+    margin-left: 15px;
+    text-align: center;
+    border-radius: 25px;
+    border: 1px solid #5a708d;
+    background: rgba(0, 0, 0, 0.1);
+    background-color: $primary;
+    color: #fff;
+}
+.today {
+    background-color: $primary;
+    border-radius: 10px;
+    color: #fff;
+    margin-top: 20px;
+    overflow-x: auto;
+}
+.today_inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 30px;
+  }
+  h1 {
+    margin-bottom: 0;
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    &:not(:last-child) {
+      margin-right: 15px;
+    }
+    span {
+      &:last-child {
+        margin-left: 10px;
+        font-size: 1.25rem;
+        opacity: 0.7;
+      }
+    }
+  }
+.today_data {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+  > div {
+    &:not(:last-child) {
+      margin-right: 20px;
+    }
+    span {
+      display: block;
+      &:first-child {
+        font-weight: $f-bold;
+      }
+      &:last-child {
+        font-weight: $f-light;
+      }
+    }
+  }
+}
+.today_right {
+    text-align: center;
+    margin-left: 20px;
+    h3 {
+        margin-bottom: 0px;
+    }
+}
+.today_icon {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    position: relative;
+    margin: 0 auto;
+}
+.weekly {
+    margin-top: 20px;
+    &_title {
+        opacity: 0.9;
+        margin-bottom: 15px;
+        font-size: 2rem; 
+        
+        span {
+            font-weight: $f-light; 
+        }
+    }
+    &_card {
+        background-color: $primary;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        color: #fff;
+
+        &:not(:last-child) {
+            margin-bottom: 15px;
+          }
+    }
+    &_inner {
+        overflow-x: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+    }
+    &_left {
+        display: flex;
+        align-items: center;
+        margin-left: -15px;
+        margin-right: -15px;
+
+        > div {
+            padding-left: 15px;
+            padding-right: 15px;
+
+            &:first-child {
+                min-width: 161px;
+              }
+        }
+        h3 {
+            margin-bottom: 0;
+            font-size: 1.5rem;
+          }
+          h4 {
+            font-size: 1rem;
+            margin-bottom: 0;
+      
+            &:not(:last-child) {
+              margin-right: 15px;
+            }
+            span {
+                &:last-child {
+                    margin-left: 10px;
+                    font-size: 0.875rem;
+                    opacity: 0.7;
+                  }
+            }
+          }
+    }
+    &_data {
+        display: flex;
+        
+        > div {
+            &:not(:last-child) {
+                margin-right: 20px;
+            }
+            span {
+                display: block;
+
+                &:first-child {
+                    font-weight: $f-bold;
+                }
+                &:last-child {
+                    font-weight: $f-light;
+                }
+            }
+        }
+    }
+    &_right {
+        text-align: center;
+        margin-left: 20px;
+        min-width: 120px;
+
+        h5 {
+            font-size: 1rem;
+            margin-bottom: 0;
+        }
+    }
+    &_icon {
+        width: 60px;
+        height: 60px;
+        overflow: hidden;
+        position: relative;
+        margin: 0 auto;
+
+        >div {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+}
