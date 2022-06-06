@@ -32,6 +32,7 @@ input {
     font-weight: 600;
     padding-left: 15px;
     padding-right: 15px;
+    
 }
 .flex {
     display: flex;
@@ -41,10 +42,31 @@ input {
 .bold {
     font-size: 23px;
 }
-@media screen and (min-width: 1440px) {
+.header::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: #0e2a57;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #22497c;
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(100,100,100,0.4); 
+}
+@media screen and (min-width: 769px) {
     .header {
-        margin-left: 25%;
-        width: 1000px;
+        width: 768px;
+        position: fixed;
+        overflow-y: auto;
+        max-height: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 }
 @media screen and (max-width: 454px) {
@@ -52,16 +74,6 @@ input {
         display: flex;
         flex-direction: row;
     }
-}
-.forecast {
-    display: flex;
-    align-items: center;
-    overflow-x: auto;
-    gap: 20px;
-}
-.forecast h1 {
-    width: 50px;
-    height: 50px;
 }
 .select {
     margin-left: 15px;
@@ -71,6 +83,7 @@ input {
     background: rgba(0, 0, 0, 0.1);
     background-color: $primary;
     color: #fff;
+    
 }
 .today {
     background-color: $primary;
@@ -139,6 +152,7 @@ input {
     margin: 0 auto;
 }
 .weekly {
+    
     margin-top: 20px;
     &_title {
         opacity: 0.9;
@@ -230,7 +244,7 @@ input {
         }
     }
     &_icon {
-        width: 60px;
+        width: 75px;
         height: 60px;
         overflow: hidden;
         position: relative;
@@ -243,4 +257,7 @@ input {
             transform: translate(-50%, -50%);
         }
     }
+}
+.svg-inline--fa {
+    margin-left: 5px;
 }
